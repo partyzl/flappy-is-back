@@ -1,6 +1,21 @@
 document.addEventListener("keypress", handleStart, { once: true });
 const title = document.querySelector("[data-title]");
 
-const handleStart = () => {};
+let lastTime;
+
+const updateLoop = (time) => {
+  lastTime == null
+    ? (lastTime = time)
+    : window.requestAnimationFrame(updateLoop);
+  const delta = time - lastTime;
+  updateBird(delta);
+  lastTime = time;
+  window.requestAnimationFrame(updateLoop);
+};
+
+const handleStart = () => {
+  title.classList.add("hide");
+  window.requestAnimationFrame(updateLoop);
+};
 
 const handleLost = () => {};
